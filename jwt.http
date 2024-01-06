@@ -1,0 +1,28 @@
+GET http://localhost:5000/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiY2hhY2h0aWVuIiwiaWF0IjoxNjk1MjIxMDI0LCJleHAiOjE2OTUyMjEwODR9.A5ATOA-RMqvKLRKwmz9BYJypMi8lKdCYwL0IeUWuZnQ
+
+DELETE http://localhost:5000/logout
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoYWNodGllbiIsImlhdCI6MTY5NTIxOTA4OH0.hdNRkyKhgL635qmgJWjIx-dVldyW8rNCT8Cf-eLRY8A"
+}
+
+
+###
+
+POST http://localhost:5000/refresh
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiY2hhY2h0aWVuIiwiaWF0IjoxNjk1MjIxMjQ1fQ.RBebYwmSGOKIs6J27v1p_Djy1PITwEgeJtMHv4DHYis"
+}
+
+###
+
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "username": "tienlevi",
+}
