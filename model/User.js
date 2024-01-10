@@ -14,7 +14,10 @@ const UserData = new mongoose.Schema({
     type: String,
     require: true,
   },
-  tel: String,
+  tel: {
+    type: String,
+    require: true,
+  },
   refreshToken: {
     type: String,
     require: false,
