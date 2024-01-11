@@ -96,19 +96,28 @@ function AuthController(app) {
   });
 
   app.post("/changeinfor", async (req, res) => {
+    const { _id, email } = req.body;
     try {
-      const { _id, email, tel } = req.body;
-      const user = await UserModel.updateOne(
-        { _id: _id },
-        { email: email },
-        { tel: tel },
+      const update = await UserModel.updateOne(
+        { _id: "6547a33f4b8bf47926c70ee2" },
+        { email: "tienyeujustinaxie@gmail.com" },
+        { new: false },
         (err, response) => {
-          console.log(response);
+          console.log("Information change", response);
           if (err) console.log(err);
         }
       );
-      console.log("Information change", email);
-      res.status(200).json({ message: "Change success" });
+      // const update = await UserModel.findByIdAndUpdate(
+      //   _id,
+      //   {
+      //     $set: { email: "tienyeujustinaxie@gmail.com" },
+      //   },
+      //   (err, response) => {
+      //     console.log("Information change", response);
+      //     if (err) console.log(err);
+      //   }
+      // );
+      return res.status(200).json({ message: "Change success", update });
     } catch (err) {
       res.status(500).json({ message: "Internal server error" });
     }
