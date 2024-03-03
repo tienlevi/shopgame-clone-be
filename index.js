@@ -6,11 +6,6 @@ import cookieParser from "cookie-parser";
 import Connect from "./model/Connect.js";
 import AuthController from "./controllers/AuthController.js";
 import UserController from "./controllers/UserController.js";
-const corsOptions = {
-  origin: /\.onrender\.com$/,
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-};
-app.use(cors(corsOptions));
 
 const app = express();
 const port = 5000;
