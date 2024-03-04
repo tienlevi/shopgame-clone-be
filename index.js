@@ -15,7 +15,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://shopgame-clone-server.onrender.com",
+    origin: "https://shopgame-clone.vercel.app",
     methods: ["GET", "POST"],
     credentials: true,
   })
@@ -23,7 +23,7 @@ app.use(
 app.use((req, res, next) => {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://shopgame-clone-server.onrender.com"
+    "'https://shopgame-clone.vercel.app"
   );
   res.setHeader("Access-Control-Allow-Credentials", true);
   next();
