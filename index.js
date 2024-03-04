@@ -16,14 +16,14 @@ app.use(express.json());
 app.use(
   cors({
     origin: "https://shopgame-clone.vercel.app",
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   })
 );
 app.use((req, res, next) => {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "'https://shopgame-clone.vercel.app"
+    "https://shopgame-clone.vercel.app"
   );
   res.setHeader("Access-Control-Allow-Credentials", true);
   next();
