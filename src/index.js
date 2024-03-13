@@ -26,7 +26,15 @@ app.use((req, res, next) => {
     "https://shopgame-clone.vercel.app",
     "http://localhost:3000",
   ]);
-  res.setHeader("Access-Control-Allow-Credentials", true);
+  app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+  });
   next();
 });
 app.use(cookieParser());
