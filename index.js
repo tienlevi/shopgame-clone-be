@@ -15,16 +15,16 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://shopgame-clone.vercel.app" && "http://localhost:3000",
+    origin: ["https://shopgame-clone.vercel.app", "http://localhost:3000"],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   })
 );
 app.use((req, res, next) => {
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "https://shopgame-clone.vercel.app" && "http://localhost:3000"
-  );
+  res.setHeader("Access-Control-Allow-Origin", [
+    "https://shopgame-clone.vercel.app",
+    "http://localhost:3000",
+  ]);
   res.setHeader("Access-Control-Allow-Credentials", true);
   next();
 });
