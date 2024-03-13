@@ -13,6 +13,7 @@ Connect();
 dotenv.config();
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(cors());
 app.use(
   cors({
     origin: ["https://shopgame-clone.vercel.app", "http://localhost:3000"],
