@@ -9,36 +9,49 @@ import UserController from "./controllers/UserController.js";
 
 const app = express();
 const port = 5000;
+// Connect
 Connect();
 dotenv.config();
+// Middleware
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(cors());
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://shopgame-clone.vercel.app",
+];
+
 app.use(
   cors({
-    origin: ["https://shopgame-clone.vercel.app", "http://localhost:3000"],
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS not allowed"));
+      }
+    },
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   })
 );
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", [
-    "https://shopgame-clone.vercel.app",
-    "http://localhost:3000",
-  ]);
-  app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    next();
-  });
-  next();
-});
-app.use(cookieParser());
+// app.use(
+//   cors({
+//     origin: ["http://localhost:3000", "https://shopgame-clone.vercel.app"],
+//     methods: ["GET", "POST", "OPTIONS"],
+//     credentials: true,
+//   })
+// );
 
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", [
+//     "http://localhost:3000",
+//     "https://shopgame-clone.vercel.app",
+//   ]);
+//   res.header("Access-Control-Allow-Credentials", true);
+//   next();
+// });
+
+app.use(cookieParser());
 AuthController(app);
 UserController(app);
 
