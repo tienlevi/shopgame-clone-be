@@ -4,8 +4,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import Connect from "./model/Connect.js";
-import AuthController from "./controllers/AuthController.js";
-import UserController from "./controllers/UserController.js";
+import router from "./router/router.js";
 
 const app = express();
 const port = 5000;
@@ -17,7 +16,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 const allowedOrigins = [
-  "http://localhost:3000",
+  "http://localhost:5173",
   "https://shopgame-clone.vercel.app",
 ];
 
@@ -52,7 +51,6 @@ app.use(
 // });
 
 app.use(cookieParser());
-AuthController(app);
-UserController(app);
+app.use("", router);
 
 app.listen(port, () => console.log(`localhost is http://localhost:${port}`));
