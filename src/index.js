@@ -15,40 +15,21 @@ dotenv.config();
 app.use(morgan("dev"));
 app.use(express.json());
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://shopgame-clone.vercel.app",
-];
-
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("CORS not allowed"));
-      }
-    },
+    origin: "https://shopgame-clone.vercel.app",
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   })
 );
-// app.use(
-//   cors({
-//     origin: ["http://localhost:3000", "https://shopgame-clone.vercel.app"],
-//     methods: ["GET", "POST", "OPTIONS"],
-//     credentials: true,
-//   })
-// );
 
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", [
-//     "http://localhost:3000",
-//     "https://shopgame-clone.vercel.app",
-//   ]);
-//   res.header("Access-Control-Allow-Credentials", true);
-//   next();
-// });
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", [
+    "https://shopgame-clone.vercel.app",
+  ]);
+  res.header("Access-Control-Allow-Credentials", true);
+  next();
+});
 
 app.use(cookieParser());
 app.use("", router);

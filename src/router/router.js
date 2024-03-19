@@ -2,7 +2,7 @@ import express from "express";
 import UserModel from "../model/User.js";
 import { RefreshToken } from "../controllers/AuthController.js";
 import { Login, Register } from "../controllers/FormController.js";
-import AuthenticateToken from "../controllers/AuthenticateToken.js";
+import AuthenticateToken from "../middleware/AuthenticateToken.js";
 
 const router = express.Router();
 
