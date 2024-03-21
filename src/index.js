@@ -8,12 +8,15 @@ import router from "./router/router.js";
 
 const app = express();
 const port = 5000;
+
 // Connect
 Connect();
 dotenv.config();
+
 // Middleware
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(cookieParser());
 
 app.use(
   cors({
@@ -32,7 +35,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(cookieParser());
-app.use("", router);
+app.use("/api", router);
 
-app.listen(port, () => console.log(`localhost is http://localhost:${port}`));
+app.listen(port, () => console.log(`Server is running on port ${port}`));
