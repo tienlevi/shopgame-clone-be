@@ -4,8 +4,8 @@ import UserModel from "../model/User.js";
 
 dotenv.config();
 export const Login = async (req, res) => {
-  const { username, password } = req.body;
-  const user = await UserModel.findOne({ username });
+  const { name, email, password } = req.body;
+  const user = await UserModel.findOne({ email });
 
   try {
     if (!user) {
@@ -16,21 +16,22 @@ export const Login = async (req, res) => {
     }
 
     const accessToken = jwt.sign(
-      { username: user.username },
+      { email: user.email },
       process.env.JWT_ACCESS_SECRET,
       {
         expiresIn: "20s",
       }
     );
     const refreshToken = jwt.sign(
-      { username: user.username },
+      { email: user.email },
       process.env.JWT_REFRESH_SECRET
     );
     user.refreshToken = refreshToken;
     await user.save();
 
     return res.status(200).json({
-      username: username,
+      name: name,
+      email: email,
       password: password,
       accessToken,
       refreshToken,
@@ -43,8 +44,8 @@ export const Login = async (req, res) => {
 
 export const Register = async (req, res) => {
   try {
-    const { username, email, password, tel } = req.body;
-    const user = await UserModel.findOne({ username });
+    const { name, email, password, tel } = req.body;
+    const user = await UserModel.findOne({ email });
     if (user) {
       res.status(402).json("User already registered.");
     }
@@ -52,11 +53,11 @@ export const Register = async (req, res) => {
       res.status(400).json("Password must be at least 8 characters long");
     }
     const refreshToken = jwt.sign(
-      { username: username },
+      { name: name },
       process.env.JWT_REFRESH_SECRET
     );
     const newUser = new UserModel({
-      username,
+      name,
       password,
       email,
       tel,
