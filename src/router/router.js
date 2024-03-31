@@ -1,7 +1,7 @@
 import express from "express";
 import UserModel from "../model/User.js";
 import { RefreshToken } from "../controllers/AuthController.js";
-import { Login, Register } from "../controllers/FormController.js";
+import { Login, SignUp } from "../controllers/FormController.js";
 import AuthenticateToken from "../middleware/AuthenticateToken.js";
 
 const router = express.Router();
@@ -23,5 +23,5 @@ router.get("/user", AuthenticateToken, async (req, res) => {
     return res.status(401).json({ error: "Unauthorized" });
   }
 });
-router.post("/signup", Register);
+router.post("/signup", SignUp);
 export default router;
