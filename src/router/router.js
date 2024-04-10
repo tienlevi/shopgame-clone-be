@@ -3,6 +3,7 @@ import UserModel from "../model/User.js";
 import { RefreshToken } from "../controllers/AuthController.js";
 import { Login, SignUp } from "../controllers/FormController.js";
 import AuthenticateToken from "../middleware/AuthenticateToken.js";
+import { createOrder } from "../controllers/Orders.js";
 
 const router = express.Router();
 
@@ -24,4 +25,6 @@ router.get("/user", AuthenticateToken, async (req, res) => {
   }
 });
 router.post("/signup", SignUp);
+
+router.post("/orders", createOrder);
 export default router;
