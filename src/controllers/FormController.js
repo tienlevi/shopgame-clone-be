@@ -45,7 +45,6 @@ export const Login = async (req, res) => {
       { email: user.email },
       process.env.JWT_REFRESH_SECRET
     );
-    user.refreshToken = refreshToken;
     await user.save();
 
     return res.status(200).json({

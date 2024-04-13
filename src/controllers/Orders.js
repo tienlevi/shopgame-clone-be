@@ -15,3 +15,12 @@ export const createOrder = async (req, res) => {
     console.log(error);
   }
 };
+
+export const getOrderByUserId = async (req, res) => {
+  try {
+    const data = await OrderSchema.find({});
+    return res.status(200).json(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
