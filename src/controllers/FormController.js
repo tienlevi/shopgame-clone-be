@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import Joi from "joi";
+import bcryptjs from "bcrypt";
 import UserModel from "../model/User.js";
 
 dotenv.config();
@@ -30,7 +31,8 @@ export const Login = async (req, res) => {
     if (!user) {
       return res.status(401).json({ error: "Invalid user" });
     }
-    if (password !== user.password) {
+    const isMatch = bcryptjs.compare(password, user.password);
+    if (!isMatch) {
       return res.status(401).json({ error: "Invalid password" });
     }
 
@@ -76,12 +78,12 @@ export const SignUp = async (req, res) => {
       { name: name },
       process.env.JWT_REFRESH_SECRET
     );
+    const hashedPassword = await bcryptjs.hash(password, 6);
     const data = new UserModel({
       name,
-      password,
+      password: hashedPassword,
       email,
       tel,
-      refreshToken: refreshToken,
     });
     await data.save();
     console.log(data);

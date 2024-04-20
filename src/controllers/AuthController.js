@@ -6,14 +6,9 @@ dotenv.config();
 export const RefreshToken = async (req, res) => {
   const { refreshToken } = req.body;
   try {
-    // const user = await UserModel.findOne({ refreshToken });
     if (!refreshToken) {
       return res.status(401).json({ error: "Invalid refresh token" });
     }
-    // const accessToken = jwt.sign(
-    //   { email: email },
-    //   process.env.JWT_ACCESS_SECRET
-    // );
     jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, user) => {
       err && console.log(err);
 
@@ -24,6 +19,7 @@ export const RefreshToken = async (req, res) => {
 
       return res.status(200).json({
         accessToken,
+        refreshToken,
       });
     });
   } catch (error) {
