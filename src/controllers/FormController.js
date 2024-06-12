@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import Joi from "joi";
-import bcryptjs from "bcrypt";
+import bcryptjs from "bcryptjs";
 import UserModel from "../model/User.js";
 
 dotenv.config();
@@ -19,23 +19,21 @@ const SignUpSchema = Joi.object({
 });
 
 export const Login = async (req, res) => {
-  const { name, email, password } = req.body;
-  const { error } = LoginSchema.validate(req.body, { abortEarly: false });
-  if (error) {
-    const errors = error.details.map((err) => err.message);
-    return res.status(400).json({ message: errors });
-  }
-  const user = await UserModel.findOne({ email });
-
   try {
+    const { name, email, password } = req.body;
+    const { error } = LoginSchema.validate(req.body, { abortEarly: false });
+    if (error) {
+      const errors = error.details.map((err) => err.message);
+      return res.status(400).json({ message: errors });
+    }
+    const user = await UserModel.findOne({ email });
     if (!user) {
-      return res.status(401).json({ error: "Invalid user" });
+      return res.status(401).json({ message: "Invalid Email" });
     }
-    const isMatch = bcryptjs.compare(password, user.password);
+    const isMatch = await bcryptjs.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ error: "Invalid password" });
+      return res.status(402).json({ message: "password incorrect" });
     }
-
     const accessToken = jwt.sign(
       { email: user.email },
       process.env.JWT_ACCESS_SECRET,
@@ -47,7 +45,6 @@ export const Login = async (req, res) => {
       { email: user.email },
       process.env.JWT_REFRESH_SECRET
     );
-    await user.save();
 
     return res.status(200).json({
       name: name,
