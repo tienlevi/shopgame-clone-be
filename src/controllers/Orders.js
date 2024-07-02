@@ -18,7 +18,7 @@ export const createOrder = async (req, res) => {
 
 export const getOrderByUserId = async (req, res) => {
   try {
-    const data = await OrderSchema.find({});
+    const data = await OrderSchema.find({ userId: req.params.userId });
     return res.status(200).json(data);
   } catch (error) {
     console.log(error);

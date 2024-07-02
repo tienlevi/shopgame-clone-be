@@ -42,3 +42,12 @@ export const AccessToken = async (req, res) => {
     return res.status(401).json({ error: "Unauthorized" });
   }
 };
+
+export const getUserById = async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.params.id);
+    return res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+  }
+};
